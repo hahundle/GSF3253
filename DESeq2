@@ -1,0 +1,94 @@
+Open R studio on ThinLinc (Analytics, rstudio 4.0.4)
+Using Console, load tidyverse
+
+#####
+library(tidyverse)
+#####
+
+#####
+library(DESeq2)
+#####
+
+#####
+countdata <- read.table("/N/slate/hahundle/GSF3253/results/counts/counts.tsv", header=TRUE,row.names = 1)
+#####
+
+Remove all the columns before sequencing reads
+
+#####
+countdata <- countdata[,6:ncol(countdata)]
+#####
+
+remove extra parts of names
+
+####
+colnames(countdata)<-gsub("..results.aligned.GSF3253.AD_","",colnames(countdata))
+####
+
+####
+colnames(countdata)<-gsub("Aligned.sortedByCoord.out.bam","",colnames(countdata))
+#####
+
+
+remove columns other than the ones you want to compare....in command below 1 is the column that you want removed, change depending on table
+
+######
+countdata <- countdata[, -1]
+######
+
+Rename all the columns...in command below 1 is the column you want renamed
+
+#########
+>colnames(countdata) [1] <- "N2rep3"
+########
+
+#####
+countdata <- as.matrix(countdata)
+######
+
+#####
+countdata <- countdata[,c("N2rep1","N2rep2","N2rep3","adr1adr2rep1","adr1adr2rep2","adr1adr2rep3")]
+#####
+
+####
+(condition <- factor(c(rep("b",3),rep("a",3))))
+######
+
+####
+(coldata <- data.frame(row.names=colnames(countdata),condition))
+######
+
+#####
+dds <- DESeqDataSetFromMatrix(countData = countdata,colData = coldata, design=~condition)
+#####
+
+#####
+keep = rowSums(counts(dds)) >= 1
+####
+
+#####
+dds <- dds[keep,]
+#####
+
+#####
+dds <- DESeq(dds)
+#####
+
+#####
+res <- results(dds)
+#####
+
+#####
+resdata <- merge(as.data.frame(res),as.data.frame(counts(dds,normalized=TRUE)),by="row.names",sort=FALSE)
+#####
+
+#####
+names(resdata)[1] <- "Gene"
+#####
+
+####
+write.csv(resdata,file="/N/slate/hahundle/GSF3253/results/WTvadr1adr2diffexp.csv")
+
+
+
+
