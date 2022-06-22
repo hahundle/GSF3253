@@ -1,0 +1,31 @@
+######
+create a sailor diretory on slate within your bigger project directory
+######
+
+mkdir SAILOR
+
+########
+scp your SAILOR output files from Carbonate
+
+Go to carbonate folder - output of sailor (results)
+scp filename.rev.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed
+scp filename.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed
+########
+
+
+#########
+scp WS275 files for wb (c.elegans.WS275.annotation.final.bed) and gtf (c_elegans.PRJNA13758.WS275.canonical_geneset.gtf) as well as sailor python script (annotator.sailor.py)
+######
+
+#######
+to see required entries for python script open help menu
+##########
+
+python3 annotator.sailor.py - h
+
+############
+Run python script
+############
+python3 annotator.sailor.py --gtf c_elegans.PRJNA13758.WS275.canonical_geneset.gtf --fwd GSF3253.fwd.file --rev GSF3253.rev.file
+--wb c.elegans.WS275.annotation.final.bed --o /N/slate/hahundle/GSF3253/SAILOR/N2_rep1.annotated.sites.csv
+
