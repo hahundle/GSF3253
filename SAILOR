@@ -1,0 +1,63 @@
+####
+Put items for analysis on Carbonate (not within a directory) either by moving or cp and move
+Need sorted bed file
+  bam file for analysis (Aligned.sortedByCoord.out.bam)
+  assembly.fa file
+  ce11_example.yaml
+####
+
+####
+Make directory for analysis
+#####
+
+mkdir N2_rep1
+
+###
+Load the singularity module
+#####
+
+module load singularity
+
+########################
+Mark downloaded programme as executable within directory
+############################
+
+chmod +x sailor-1.0.4
+
+
+#######
+Open yaml file with vim and edit filenames
+#######
+vim ce11_example.yaml
+
+####
+mode of vim
+#####
+i
+
+####
+update filenames by using arrow keys
+####
+
+####
+save vim file
+###
+
+Press esc
+:x
+
+#####
+Change name of yaml
+#####
+
+mv ce11_example.yaml N2_rep1.yaml
+
+
+#######
+Run Sailor NOT within WT_DA_rep1 directory
+######
+
+./sailor-1.0.4 N2_rep1.yaml
+
+#####
+Data is located within results folder of the N2_rep1 directory
