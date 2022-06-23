@@ -1,0 +1,32 @@
+######
+Make directory for variant calling within slate folder for project (/geode2/home/u030/hahundle/Carbonate/slate/SD_PA_exposure)
+#####
+
+mkdir Variantcall
+
+####
+copy genome file (from genome folder), snp file (slate) and aligned bam (results/aligned folder) 
+#####
+
+scp assembly.fasta /geode2/home/u030/hahundle/Carbonate/slate/GSF3253/Variantcall
+scp WS275.snps.sorted.bed /geode2/home/u030/hahundle/Carbonate/slate/GSF3253/Variantcall
+scp GSF3253-AD_Rep-1_N2_OP50_S1_R1_001_Aligned.sortedByCoord.out.bam /geode2/home/u030/hahundle/Carbonate/slate/GSF3253/Variantcall
+
+
+####
+remove duplicate reads from bam file (takes ~5 minutes per file)--Note, I was in updated rnaseq environment
+####
+
+samtools rmdup GSF3253-AD_Rep-1_N2_OP50_S1_R1_001_Aligned.sortedByCoord.out.bam N2_rep1_nodup.bam
+
+####
+Call the variant and clean up the output file with one line (took about 20 minutes for one file)
+####
+
+samtools mpileup -u -I -t DP4 -v -f assembly.fasta GSF3253_N2_rep1_nodup.bam | awk '$5 != "<*>"' | tail -n +30 > N2_rep1.rmdup.mpileup.vcf
+
+####
+Need to convert vcf to excel format but also need to be an environment, works with SAILOR_annotation environment (does not work in rnaseq environment)
+####
+
+python variant.py --v N2_rep1.rmdup.mpileup.vcf --snp WS275.snps.sorted.bed --o N2_rep1.csv
