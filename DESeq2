@@ -47,11 +47,11 @@ countdata <- as.matrix(countdata)
 ######
 
 #####
-countdata <- countdata[,c("N2rep1","N2rep2","N2rep3","adr1adr2rep1","adr1adr2rep2","adr1adr2rep3")]
+countdata <- countdata[,c("N2rep1","N2rep2","N2rep3","adr1rep1","adr1rep2","adr1rep3")]
 #####
 
 ####
-(condition <- factor(c(rep("b",3),rep("a",3))))
+(condition <- factor(c(rep("a",3),rep("b",3))))
 ######
 
 ####
@@ -87,7 +87,7 @@ names(resdata)[1] <- "Gene"
 #####
 
 ####
-write.csv(resdata,file="/N/slate/hahundle/GSF3253/results/WTvadr1adr2diffexp.csv")
+write.csv(resdata,file="/N/slate/hahundle/GSF3253/results/WTvadr1diffexp2.csv")
 
 
 
