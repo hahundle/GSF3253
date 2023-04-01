@@ -1,7 +1,7 @@
 ####
 Put items for analysis on Carbonate (not within a directory) either by moving or cp and move
 Need sorted bed file
-  bam file for analysis (Aligned.sortedByCoord.out.bam)
+  bam file for analysis (Aligned.sortedByCoord.out.bam)--located in results directory, aligned directory
   assembly.fa file
   ce11_example.yaml
 ####
@@ -61,3 +61,6 @@ Run Sailor NOT within WT_DA_rep1 directory
 
 #####
 Data is located within results folder of the N2_rep1 directory
+
+####
+repeate for N2 rep2, etc
